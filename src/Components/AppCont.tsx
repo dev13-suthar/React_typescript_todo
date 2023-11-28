@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import {Link,useNavigate} from "react-router-dom"
 import { Outlet} from "react-router-dom";
  export default function AppCont() {
+    const [Value, setValue] = useState("");
     const navigate = useNavigate()
     useEffect(() => {
        navigate('/all')
@@ -17,7 +18,7 @@ import { Outlet} from "react-router-dom";
             </ul>
         </nav>
         <form className="flex items-center gap-4 justify-center my-5">
-            <input className="w-48 px-2 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-4 border-2 " type="text" name="text" id="todo" placeholder="Enter Todo" />
+            <input className="w-48 px-2 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-4 border-2 " type="text" name="text" id="todo"  value={Value} onChange={(e)=>setValue(e.target.value)} placeholder="Enter Todo" />
             <button className="px-2 py-2 border-2 rounded-lg hover:bg-red-50 transition-all duration-300">Search</button>
         </form>
         <main className="mt-5 bg-stone-50 px-2 py-2">
