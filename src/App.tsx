@@ -1,6 +1,6 @@
 import { createBrowserRouter,RouterProvider } from "react-router-dom"
 import Applayout from "./Applayout"
-import AppCont from "./Components/AppCont"
+// import AppCont from "./Components/AppCont"
 import Completed from "./Components/Completed"
 import ActiveTodo from "./Components/ActiveTodo"
 import AllTodos from "./Components/AllTodos"

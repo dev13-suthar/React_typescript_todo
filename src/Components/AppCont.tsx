@@ -5,7 +5,7 @@ import { Outlet} from "react-router-dom";
     const navigate = useNavigate()
     useEffect(() => {
        navigate('/all')
-    }, [])
+    }, [navigate])
     
   return (
     <div className="w-[90%]  m-auto  px-2 py-4">
