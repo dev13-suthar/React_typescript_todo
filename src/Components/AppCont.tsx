@@ -8,6 +8,11 @@ import { Outlet} from "react-router-dom";
        navigate('/all')
     }, [navigate])
     
+    const handleSubmit = (e:React.FormEvent<HTMLFormElement>)=>{
+        e.preventDefault();
+        handleAddtodo(Value);
+        setValue("")
+    };
   return (
     <div className="w-[90%]  m-auto  px-2 py-4">
         <nav className="p-2 bg-red-200">
@@ -17,7 +22,7 @@ import { Outlet} from "react-router-dom";
                 <Link  to='/completed' className="list-none uppercase tracking-wider active:font-bold  active:underline">Completed</Link> 
             </ul>
         </nav>
-        <form className="flex items-center gap-4 justify-center my-5">
+        <form className="flex items-center gap-4 justify-center my-5" onSubmit={handleSubmit}>
             <input className="w-48 px-2 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-4 border-2 " type="text" name="text" id="todo"  value={Value} onChange={(e)=>setValue(e.target.value)} placeholder="Enter Todo" />
             <button className="px-2 py-2 border-2 rounded-lg hover:bg-red-50 transition-all duration-300">Search</button>
         </form>
