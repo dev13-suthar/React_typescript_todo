@@ -1,8 +1,10 @@
 import { useEffect,useState } from "react";
 import {Link,useNavigate} from "react-router-dom"
 import { Outlet} from "react-router-dom";
+import { TodosContext, useTodos } from "../Store/Todoos";
  export default function AppCont() {
-    const [Value, setValue] = useState("");
+    const [Value, setValue] = useState('')
+    const {todos} = useTodos(); 
     const navigate = useNavigate()
     useEffect(() => {
        navigate('/all')

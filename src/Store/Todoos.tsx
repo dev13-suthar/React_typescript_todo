@@ -1,45 +1,49 @@
-import React, { createContext, useState } from "react"
 
-export type TodosProvider= {
-    children: React.ReactNode
+import React, { createContext, useContext, useState } from "react"
+
+export const TodosContext = createContext<TodoContexts | null>(null);
+type ChildrenProp = {
+    children:React.ReactNode,
 }
 export type Todo = {
-    id:string;
-    task:string;
-    isCompleted:boolean;
-    createdAt:Date;
+    id:string,
+    task:string,
+    iscomplete:boolean,
+    createdAt:Date,
 }
-export type ContextType = {
-   todos:Todo[];
-   handleAddtodo: (task:string)=>void;
+export type TodoContexts = {
+    todos:Todo[],
+    handleAddtodo: (task:string)=>void,
 }
-export const todosContext  = createContext<ContextType|null>(null);
 
-export const TodosProcider = ({children}:TodosProvider)=>{
+export const TodosProvider = ({children}:ChildrenProp)=>{
     const [todos, settodos] = useState<Todo[]>([])
-    const handleAddtodo  = (task)=>{
-            settodos((prev)=>{
-                const newTodos:Todo[] = [
-                    {
-                        id:Math.random().toString(),
-                        task:task,
-                        isCompleted:false,
-                        createdAt:new Date()
-                    },
-                    ...prev
-                ] 
-                return newTodos;
-            })
+    const handleAddtodo = (tasks:string)=>{
+        settodos((prev)=>{
+            const newTodos:Todo[] = [
+                {
+                    id:Math.random().toString(),
+                    task:tasks,
+                    iscomplete:false,
+                    createdAt:new Date()
+                },
+                ...prev
+            ]
+            return newTodos;
+        })
     }
-    return <todosContext.Provider value={{todos,handleAddtodo}}>
-        {children}
-    </todosContext.Provider>
+    return <TodosContext.Provider value={{todos,handleAddtodo}}>
+            {children}
+    </TodosContext.Provider>
 }
 
-export default function Todoos() {
-  return (
-    <div>
-        
-    </div>
-  )
+//Consumer
+
+export const useTodos = ()=>{
+    const TodosCunsumer = useContext(TodosContext);
+    if(!TodosCunsumer){
+        throw new Error("Provider is used Outside")
+    }
+
+    return useTodos
 }
