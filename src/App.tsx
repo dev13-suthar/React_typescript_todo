@@ -5,7 +5,9 @@ import Completed from "./Components/Completed"
 import ActiveTodo from "./Components/ActiveTodo"
 import AllTodos from "./Components/AllTodos"
 
+
 export default function App() {
+  
   const router = createBrowserRouter([{
       path:'/',
       element:<Applayout/>,

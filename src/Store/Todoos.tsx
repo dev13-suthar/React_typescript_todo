@@ -1,5 +1,4 @@
-
-import React, { createContext, useContext, useState } from "react"
+import React, {createContext, useContext, useState } from "react"
 
 export const TodosContext = createContext<TodoContexts | null>(null);
 type ChildrenProp = {
@@ -11,39 +10,60 @@ export type Todo = {
     iscomplete:boolean,
     createdAt:Date,
 }
+
 export type TodoContexts = {
     todos:Todo[],
-    handleAddtodo: (task:string)=>void,
+    HandleTodo:(task:string)=>void,
+    toggleTodoCompleted:(task:string)=>void,
+    handleCLick: (task:string)=>void,
 }
 
 export const TodosProvider = ({children}:ChildrenProp)=>{
     const [todos, settodos] = useState<Todo[]>([])
-    const handleAddtodo = (tasks:string)=>{
+    const HandleTodo = (task:string)=>{
         settodos((prev)=>{
             const newTodos:Todo[] = [
                 {
                     id:Math.random().toString(),
-                    task:tasks,
+                    task:task,
                     iscomplete:false,
                     createdAt:new Date()
                 },
                 ...prev
             ]
-            return newTodos;
+            return newTodos
         })
     }
-    return <TodosContext.Provider value={{todos,handleAddtodo}}>
-            {children}
-    </TodosContext.Provider>
-}
 
-//Consumer
-
-export const useTodos = ()=>{
-    const TodosCunsumer = useContext(TodosContext);
-    if(!TodosCunsumer){
-        throw new Error("Provider is used Outside")
+    const toggleTodoCompleted = (id:string)=>{
+        settodos((prev)=>{
+            let newTodo = prev.map((todo)=>{
+                if(todo.id === id){
+                    return {...todo,iscomplete:!todo.iscomplete}
+                }
+                return todo;
+            })
+            return newTodo
+        })
     }
 
-    return useTodos
+    const handleCLick = (id:string)=>{
+        settodos((prev)=>{
+            let todos = prev.filter((f)=>f.id!==id)
+            return todos;
+        })
+    }
+    return <TodosContext.Provider value={{todos,HandleTodo,toggleTodoCompleted,handleCLick}}>
+        {children}
+    </TodosContext.Provider>
+}
+// setnewffood((f)=>f.filter((ff)=>ff.id!==id))
+
+//Consumer
+export const  useTodo = ()=>{
+    const TodoConsumer = useContext(TodosContext);
+    if(!TodoConsumer){
+        throw new Error("used outside ")
+    }
+    return TodoConsumer;
 }
